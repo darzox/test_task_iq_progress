@@ -39,7 +39,7 @@ type Service interface {
 // @Router /deposit [post]
 func (h *handler) Deposit(ctx *gin.Context) {
 	var req DepositRequest
-	if err := ctx.ShouldBind(req); err != nil {
+	if err := ctx.ShouldBind(&req); err != nil {
 		ctx.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
@@ -64,7 +64,7 @@ func (h *handler) Deposit(ctx *gin.Context) {
 // @Router /transfer [post]
 func (h *handler) Transfer(ctx *gin.Context) {
 	var req TransferRequest
-	if err := ctx.ShouldBind(req); err != nil {
+	if err := ctx.ShouldBind(&req); err != nil {
 		ctx.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
@@ -82,11 +82,11 @@ func (h *handler) Transfer(ctx *gin.Context) {
 // @Description get last transactions of a user
 // @Tags User
 // @Accept json
-// @Param user_id path string true "User id"
+// @Param user_id query string true "User id"
 // @Success 200 {array} models.Transaction
 // @Failure 400 "BadRequest"
 // @Failure 500 "UnknownError"
-// @Router /transactions [post]
+// @Router /transactions [get]
 func (h *handler) GetLast10Transactions(ctx *gin.Context) {
 	userIdStr := ctx.Query("user_id")
 	userId, err := strconv.ParseInt(userIdStr, 10, 64)

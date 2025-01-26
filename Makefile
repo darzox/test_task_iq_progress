@@ -1,5 +1,5 @@
 swagger:
-	swag init -g ./cmd/main.go -o ./docs
+	swag init -g ./cmd/server/main.go -o ./docs
 local:
 	POSTGRES_DB=example \
 	POSTGRES_HOST=localhost \

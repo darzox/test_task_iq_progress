@@ -79,7 +79,7 @@ func (r *repository) Transfer(ctx context.Context, fromUserId int64, toUserId in
 
 func (r *repository) GetUserBalance(ctx context.Context, userId int64) (float64, error) {
 	var result float64
-	row := r.db.QueryRow(ctx, "select blance from users where id = $1", userId)
+	row := r.db.QueryRow(ctx, "select balance from users where id = $1", userId)
 	err := row.Scan(&result)
 	if err != nil {
 		return 0, err
@@ -100,7 +100,7 @@ func (r *repository) GetLast10Transactions(ctx context.Context, userId int64) ([
 	left join transaction_types tt on t.transaction_type_id = tt.id
 	where user_id = $1
 	order by t.created_at desc
-	limit 10`)
+	limit 10`, userId)
 	if err != nil {
 		return nil, err
 	}

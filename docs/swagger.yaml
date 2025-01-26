@@ -51,13 +51,13 @@ paths:
       tags:
       - User
   /transactions:
-    post:
+    get:
       consumes:
       - application/json
       description: get last transactions of a user
       parameters:
       - description: User id
-        in: path
+        in: query
         name: user_id
         required: true
         type: string

@@ -11,6 +11,7 @@ import (
 	"github.com/darzox/test_task_iq_progress/app"
 	"github.com/darzox/test_task_iq_progress/pkg/config"
 	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/jackc/pgx/v5/stdlib"
 	"github.com/pressly/goose/v3"
 	"github.com/sirupsen/logrus"
 )
@@ -19,6 +20,7 @@ const (
 	appName = "api-server"
 )
 
+//go:embed migrations/*.sql
 var embedMigrations embed.FS
 
 func main() {
@@ -49,12 +51,10 @@ func main() {
 	}
 	goose.SetBaseFS(embedMigrations)
 
-	// db := stdlib.OpenDBFromPool(dbPool)
-	// _, err = fs.Stat(embedMigrations, "migrations")
-	// fmt.Println(err, "tut")
-	// if err := goose.Up(db, "migrations"); err != nil {
-	// 	loggerEntry.Panicf("failed to up migrations: %v", err)
-	// }
+	db := stdlib.OpenDBFromPool(dbPool)
+	if err := goose.Up(db, "migrations"); err != nil {
+		loggerEntry.Panicf("failed to up migrations: %v", err)
+	}
 
 	server := http.Server{}
 	server.Addr = fmt.Sprintf(":%d", cfg.HttpPort)

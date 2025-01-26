@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS transaction_types (
     name text
 );
 
-CREATE UNIQUE INDEX IF NOT EXISTS idx_transaction_types_name on transaction_types using hash (name);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_transaction_types_name on transaction_types(name);
 
 insert into transaction_types(name) values('deposit');
 insert into transaction_types(name) values('transfer');

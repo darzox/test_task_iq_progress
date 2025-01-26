@@ -49,7 +49,7 @@ const docTemplate = `{
             }
         },
         "/transactions": {
-            "post": {
+            "get": {
                 "description": "get last transactions of a user",
                 "consumes": [
                     "application/json"
@@ -62,7 +62,7 @@ const docTemplate = `{
                         "type": "string",
                         "description": "User id",
                         "name": "user_id",
-                        "in": "path",
+                        "in": "query",
                         "required": true
                     }
                 ],

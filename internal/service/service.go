@@ -71,6 +71,10 @@ func (s *service) Transfer(ctx context.Context, fromUserId int64, toUserId int64
 }
 
 func (s *service) GetLast10Transactions(ctx context.Context, userId int64) ([]models.Transaction, error) {
+	if err := validateUserId(userId); err != nil {
+		return nil, err
+	}
+
 	return s.repo.GetLast10Transactions(ctx, userId)
 }
 
@@ -83,7 +87,7 @@ func validateAmount(amount float64) error {
 }
 
 func validateUserId(userId int64) error {
-	if userId == 0 {
+	if userId <= 0 {
 		return errors.New("user_id is zero")
 	}
 
