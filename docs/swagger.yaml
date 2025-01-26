@@ -1,0 +1,98 @@
+definitions:
+  handler.DepositRequest:
+    properties:
+      amount:
+        type: number
+      user_id:
+        type: integer
+    type: object
+  handler.TransferRequest:
+    properties:
+      amount:
+        type: number
+      from_user_id:
+        type: integer
+      to_user_id:
+        type: integer
+    type: object
+  models.Transaction:
+    properties:
+      amount:
+        type: number
+      comment:
+        type: string
+      id:
+        type: integer
+      type_name:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /deposit:
+    post:
+      consumes:
+      - application/json
+      description: deposit to user balance
+      parameters:
+      - description: deposit info
+        in: body
+        name: DepositRequest
+        required: true
+        schema:
+          $ref: '#/definitions/handler.DepositRequest'
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: BadRequest
+        "500":
+          description: UnknownError
+      tags:
+      - User
+  /transactions:
+    get:
+      consumes:
+      - application/json
+      description: get last transactions of a user
+      parameters:
+      - description: User id
+        in: query
+        name: user_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Transaction'
+            type: array
+        "400":
+          description: BadRequest
+        "500":
+          description: UnknownError
+      tags:
+      - User
+  /transfer:
+    post:
+      consumes:
+      - application/json
+      description: transfer money from one balance to another
+      parameters:
+      - description: transfer info
+        in: body
+        name: TransferRequest
+        required: true
+        schema:
+          $ref: '#/definitions/handler.TransferRequest'
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: BadRequest
+        "500":
+          description: UnknownError
+      tags:
+      - User
+swagger: "2.0"
