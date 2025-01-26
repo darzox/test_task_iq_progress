@@ -11,3 +11,7 @@ local:
 	go run cmd/server/main.go
 
 run:
+	docker-compose up --build
+
+test:
+	go test ./tests/

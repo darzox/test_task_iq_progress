@@ -16,9 +16,9 @@ FROM alpine:latest
 WORKDIR /app
 
 COPY --from=build /server ./server
-COPY migrations ./migrations
+COPY cmd/server/migrations ./migrations
 
 COPY docs ./docs
 EXPOSE 8080
 
-ENTRYPOINT ["app/server"]
+ENTRYPOINT ["/app/server"]
